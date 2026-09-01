@@ -1,0 +1,101 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /{document=**} {
+      allow read, write: if false;
+    }
+    
+    // Helpers
+    function isValidId(id) {
+       return id is string && id.size() <= 128 && id.matches('^[a-zA-Z0-9_\\-]+$');
+    }
+    function isSignedIn() { return request.auth != null; }
+    function incoming() { return request.resource.data; }
+    function existing() { return resource.data; }
+
+    function isValidUser(data) {
+      return data.keys().hasAll(['uid', 'email']) &&
+             data.uid == request.auth.uid &&
+             data.email is string && data.email.size() <= 128;
+    }
+
+    match /users/{userId} {
+      allow get: if isSignedIn();
+      allow list: if isSignedIn();
+      allow update: if isSignedIn() && request.auth.uid == userId && isValidUser(incoming());
+      allow create: if isSignedIn() && request.auth.uid == userId && isValidUser(incoming());
+    }
+
+    match /pendingInvites/{inviteId} {
+      allow get, list, create, delete: if isSignedIn();
+    }
+
+    // Shared Spaces
+    function isValidSharedAccount(data) {
+       return data.keys().hasAll(['name', 'balance', 'type', 'ownerId', 'memberIds']) &&
+              data.name is string && data.name.size() > 0 && data.name.size() <= 64 &&
+              data.balance is number &&
+              data.type is string && data.type.size() <= 32 &&
+              data.ownerId == request.auth.uid &&
+              data.memberIds is list && data.memberIds.size() <= 50;
+    }
+    
+    function isSharedAccountMember(accountId) {
+       return request.auth.uid in get(/databases/$(database)/documents/sharedAccounts/$(accountId)).data.memberIds ||
+              get(/databases/$(database)/documents/sharedAccounts/$(accountId)).data.ownerId == request.auth.uid;
+    }
+    
+    function isSharedAccountMemberData(data) {
+       return request.auth.uid in data.memberIds || data.ownerId == request.auth.uid;
+    }
+
+    match /sharedAccounts/{accountId} {
+      allow create: if isSignedIn() && isValidId(accountId) && isValidSharedAccount(incoming()) && incoming().createdAt == request.time;
+      
+      allow update: if isSignedIn() && isValidId(accountId) && 
+        (
+           // Owner action
+           (existing().ownerId == request.auth.uid && incoming().diff(existing()).affectedKeys().hasOnly(['name', 'balance', 'type', 'color', 'memberIds'])) ||
+           // Member action
+           (isSharedAccountMemberData(existing()) && incoming().diff(existing()).affectedKeys().hasOnly(['balance']))
+        );
+      
+      allow get: if isSignedIn() && isValidId(accountId) && isSharedAccountMemberData(resource.data);
+      allow list: if isSignedIn() && isSharedAccountMemberData(resource.data);
+      allow delete: if isSignedIn() && isValidId(accountId) && existing().ownerId == request.auth.uid;
+      
+      match /members/{memberId} {
+        function isValidMember(data) {
+           return data.keys().hasAll(['uid', 'name', 'role']) &&
+                  data.uid == memberId &&
+                  data.name is string && data.name.size() <= 64 &&
+                  data.role is string && data.role.size() <= 32;
+        }
+        
+        allow get, list: if isSignedIn() && isSharedAccountMember(accountId);
+        allow create: if isSignedIn() && isValidId(memberId) &&
+            get(/databases/$(database)/documents/sharedAccounts/$(accountId)).data.ownerId == request.auth.uid &&
+            isValidMember(incoming());
+        allow update: if isSignedIn() && isValidId(memberId) &&
+            get(/databases/$(database)/documents/sharedAccounts/$(accountId)).data.ownerId == request.auth.uid &&
+            isValidMember(incoming());
+        allow delete: if isSignedIn() && isValidId(memberId) &&
+            (get(/databases/$(database)/documents/sharedAccounts/$(accountId)).data.ownerId == request.auth.uid || request.auth.uid == memberId);
+      }
+      
+      match /feed/{feedItemId} {
+        function isValidFeedItem(data) {
+           return data.keys().hasAll(['user', 'action', 'amount', 'target', 'timestamp']) &&
+                  data.user is string && data.user.size() <= 64 &&
+                  data.action is string && data.action.size() <= 64 &&
+                  data.amount is number &&
+                  data.target is string && data.target.size() <= 64 &&
+                  data.timestamp is number;
+        }
+        
+        allow get, list: if isSignedIn() && isSharedAccountMember(accountId);
+        allow create: if isSignedIn() && isSharedAccountMember(accountId) && isValidFeedItem(incoming());
+      }
+    }
+  }
+}

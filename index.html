@@ -1,0 +1,130 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Nova Finance AI</title>
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' fill='%236366f1'%3E%3Crect width='100' height='100' rx='20' fill='%230f172a'/%3E%3Cg fill='%23ffffff'%3E%3Cpath d='M50 20 L55 35 L50 42 L45 35 Z'/%3E%3Cpath d='M48 22 C42 28 34 26 28 17 C27 28 32 40 40 44 C36 36 42 27 48 22 Z'/%3E%3Cpath d='M52 22 C58 28 66 26 72 17 C73 28 68 40 60 44 C64 36 58 27 52 22 Z'/%3E%3Cpath d='M46 45 C38 41 28 42 19 32 C21 44 28 50 38 52 C32 48 38 45 46 45 Z'/%3E%3Cpath d='M54 45 C62 41 72 42 81 32 C79 44 72 50 62 52 C68 48 62 45 54 45 Z'/%3E%3Cpath d='M36 54 C27 54 18 50 13 46 C16 57 26 62 38 61 C32 58 34 55 36 54 Z'/%3E%3Cpath d='M64 54 C73 54 82 50 87 46 C84 57 74 62 62 61 C68 58 66 55 64 54 Z'/%3E%3Cpath d='M39 63 C28 64 21 61 17 58 C22 69 32 72 42 69 C38 67 38 64 39 63 Z'/%3E%3Cpath d='M61 63 C72 64 79 61 83 58 C78 69 68 72 58 69 C62 67 62 64 61 63 Z'/%3E%3Cpath d='M50 48 C47 54 46 62 47 67 C49 69 51 69 53 67 C54 62 53 54 50 48 Z'/%3E%3Cpath d='M50 76 C47 79 43 83 45 86 C48 89 50 93 50 93 C50 93 52 89 55 86 C57 83 53 79 50 76 Z'/%3E%3C/g%3E%3C/svg%3E" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              primary: '#0f172a', // Slate 900
+              secondary: '#1e293b', // Slate 800
+              accent: '#6366f1', // Indigo 500
+              success: '#10b981', // Emerald 500
+              danger: '#f43f5e', // Rose 500
+              warning: '#f59e0b', // Amber 500
+            },
+            fontFamily: {
+              sans: ['Inter', 'sans-serif'],
+            },
+            animation: {
+              'fade-in': 'fadeIn 0.6s cubic-bezier(0.16, 1, 0.3, 1)',
+              'slide-up': 'slideUp 0.6s cubic-bezier(0.16, 1, 0.3, 1)',
+              'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+              'shimmer': 'shimmer 2.5s linear infinite',
+              'shimmer-fast': 'shimmer 1.5s linear infinite',
+              'float': 'float 6s ease-in-out infinite',
+            },
+            keyframes: {
+              fadeIn: {
+                '0%': { opacity: '0' },
+                '100%': { opacity: '1' },
+              },
+              slideUp: {
+                '0%': { transform: 'translateY(20px)', opacity: '0' },
+                '100%': { transform: 'translateY(0)', opacity: '1' },
+              },
+              shimmer: {
+                '0%': { transform: 'translateX(-100%)' },
+                '100%': { transform: 'translateX(100%)' }
+              },
+              float: {
+                '0%, 100%': { transform: 'translateY(0)' },
+                '50%': { transform: 'translateY(-10px)' },
+              }
+            }
+          },
+        },
+      };
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+      body {
+        font-family: 'Inter', sans-serif;
+        background-color: #020617;
+        color: #f8fafc;
+      }
+      
+      /* Refined Scrollbar */
+      ::-webkit-scrollbar {
+        width: 8px;
+        height: 8px;
+      }
+      ::-webkit-scrollbar-track {
+        background: rgba(15, 23, 42, 0.3); 
+      }
+      ::-webkit-scrollbar-thumb {
+        background: rgba(71, 85, 105, 0.5); 
+        border-radius: 10px;
+        border: 2px solid rgba(15, 23, 42, 0.3);
+      }
+      ::-webkit-scrollbar-thumb:hover {
+        background: rgba(99, 102, 241, 0.5); 
+      }
+
+      /* Glass Utilities */
+      .glass {
+        background: rgba(15, 23, 42, 0.7);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        border-right: 1px solid rgba(255, 255, 255, 0.08);
+      }
+      
+      .glass-card {
+        background: rgba(30, 41, 59, 0.4);
+        backdrop-filter: blur(24px);
+        -webkit-backdrop-filter: blur(24px);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+      }
+
+      .glass-header {
+        background: rgba(2, 6, 23, 0.85);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      }
+
+      .custom-scrollbar::-webkit-scrollbar {
+        width: 6px;
+      }
+      .custom-scrollbar::-webkit-scrollbar-thumb {
+        background: rgba(255, 255, 255, 0.1);
+      }
+    </style>
+  <script type="importmap">
+{
+  "imports": {
+    "@google/genai": "https://aistudiocdn.com/@google/genai@^1.31.0",
+    "lucide-react": "https://aistudiocdn.com/lucide-react@^0.555.0",
+    "react/": "https://aistudiocdn.com/react@^19.2.1/",
+    "react": "https://aistudiocdn.com/react@^19.2.1",
+    "react-dom/": "https://aistudiocdn.com/react-dom@^19.2.1/",
+    "recharts": "https://aistudiocdn.com/recharts@^3.5.1",
+    "canvas-confetti": "https://esm.sh/canvas-confetti@1.9.3",
+    "@testing-library/react": "https://esm.sh/@testing-library/react@^16.3.1"
+  }
+}
+</script>
+<link rel="stylesheet" href="/src/index.css">
+</head>
+  <body>
+    <div id="root"></div>
+  <script type="module" src="/src/main.tsx"></script>
+</body>
+</html>

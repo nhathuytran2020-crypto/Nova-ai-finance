@@ -1,0 +1,82 @@
+{
+  "entities": {
+    "User": {
+      "title": "User Profile",
+      "description": "User account and profile information",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string", "description": "Unique identifier for the user" },
+        "email": { "type": "string", "description": "User's email address" },
+        "displayName": { "type": "string", "description": "User's display name" },
+        "createdAt": { "type": "string", "format": "date-time", "description": "When the account was created" },
+        "plan": { "type": "string", "enum": ["free", "pro", "ultra"], "description": "User's current subscription plan" },
+        "onboardingComplete": { "type": "boolean", "description": "Whether the user has finished the onboarding process" },
+        "hasCompletedLogTransition": { "type": "boolean", "description": "Flag indicating user has completed the onboarding and log transition flow" },
+        "has_seen_transition": { "type": "boolean", "description": "Flag indicating user has seen and completed the transition flow" }
+      },
+      "required": ["uid", "email"]
+    },
+    "SharedAccount": {
+      "title": "Shared Account",
+      "description": "A financial account shared between users",
+      "type": "object",
+      "properties": {
+        "name": { "type": "string" },
+        "balance": { "type": "number" },
+        "type": { "type": "string" },
+        "color": { "type": "string" },
+        "ownerId": { "type": "string" },
+        "memberIds": { 
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["name", "balance", "type", "ownerId", "memberIds"]
+    },
+    "SharedMember": {
+      "title": "Shared Account Member",
+      "description": "User who is a member of a shared account",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string" },
+        "name": { "type": "string" },
+        "role": { "type": "string" },
+        "avatar": { "type": "string" }
+      },
+      "required": ["uid", "name", "role"]
+    },
+    "SharedFeedItem": {
+      "title": "Shared Account Feed Item",
+      "description": "Log of actions in a shared account",
+      "type": "object",
+      "properties": {
+        "user": { "type": "string" },
+        "action": { "type": "string" },
+        "amount": { "type": "number" },
+        "target": { "type": "string" },
+        "time": { "type": "string" },
+        "timestamp": { "type": "number" }
+      },
+      "required": ["user", "action", "amount", "target", "timestamp"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": "User",
+      "description": "User profile collection"
+    },
+    "/sharedAccounts/{accountId}": {
+      "schema": "SharedAccount",
+      "description": "Shared accounts top collection"
+    },
+    "/sharedAccounts/{accountId}/members/{memberId}": {
+      "schema": "SharedMember",
+      "description": "Members of a shared account"
+    },
+    "/sharedAccounts/{accountId}/feed/{feedItemId}": {
+      "schema": "SharedFeedItem",
+      "description": "Activity feed for a shared account"
+    }
+  }
+}
