@@ -392,13 +392,13 @@ const Dashboard: React.FC<DashboardProps> = React.memo(({
     let activeBudgets = budgets;
     if (!activeBudgets || activeBudgets.length === 0) {
         activeBudgets = [
-            { id: '1', category: 'Housing' as any, limit: 1500, currentAmount: 0 },
-            { id: '2', category: 'Utilities' as any, limit: 200, currentAmount: 0 },
-            { id: '3', category: 'Subscription' as any, limit: 100, currentAmount: 0 },
-            { id: '4', category: 'Food & Dining' as any, limit: 600, currentAmount: 0 },
-            { id: '5', category: 'Transport' as any, limit: 200, currentAmount: 0 },
-            { id: '6', category: 'Shopping' as any, limit: 300, currentAmount: 0 },
-            { id: '7', category: 'Entertainment' as any, limit: 150, currentAmount: 0 },
+            { id: '1', category: 'Housing' as any, limit: 1500 },
+            { id: '2', category: 'Utilities' as any, limit: 200 },
+            { id: '3', category: 'Subscription' as any, limit: 100 },
+            { id: '4', category: 'Food & Dining' as any, limit: 600 },
+            { id: '5', category: 'Transport' as any, limit: 200 },
+            { id: '6', category: 'Shopping' as any, limit: 300 },
+            { id: '7', category: 'Entertainment' as any, limit: 150 },
         ];
     }
     let budgeted = 0;
