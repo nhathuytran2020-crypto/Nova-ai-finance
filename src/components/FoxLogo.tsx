@@ -1,5 +1,4 @@
 import React from 'react';
-import foxImg from '../assets/images/fox_logo_icon_1787548701390.jpg';
 
 interface FoxLogoProps {
   className?: string;
@@ -11,7 +10,7 @@ export const FoxLogo: React.FC<FoxLogoProps> = ({ className = 'w-6 h-6', size, u
   if (useImage) {
     return (
       <img
-        src={foxImg}
+        src="/images/fox_logo_icon_1787548701390.jpg"
         alt="Nova Fox Logo"
         referrerPolicy="no-referrer"
         className={`object-contain rounded-full select-none ${className}`}
