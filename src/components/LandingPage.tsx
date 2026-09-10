@@ -2,6 +2,9 @@
 import React, { useState, useEffect, useRef, useMemo } from 'react';
 import { Sparkles, Shield, Zap, TrendingUp, Handshake, Wallet, CreditCard, ArrowRight, Activity, Check, Users, Cpu, ShieldCheck, Gauge, Star, StarHalf, Volume2, Search, Palette, Layers, Radio, Globe, Heart, ShieldAlert, BarChart3, Database, Lock } from 'lucide-react';
 import { FoxLogo } from './FoxLogo';
+import fileImg from "../assets/images/human_laptop_files_1780890608306.png";
+import todoImg from "../assets/images/man_phone_todo_1780921183954.png";
+import syncImg from "../assets/images/synced_devices_hq_1780921199459.png";
 import AuthPage from './AuthPage';
 
 interface LandingPageProps {
@@ -871,7 +874,7 @@ const LandingPage: React.FC<LandingPageProps> = ({ onLoginSuccess }) => {
                       <div className="flex-1 max-w-md w-full relative group/img overflow-hidden rounded-2xl border border-white/10 shadow-[0_20px_50px_rgba(0,0,0,0.5)]">
                           <div className="absolute inset-0 bg-gradient-to-t from-slate-950/85 via-transparent to-transparent z-10 pointer-events-none"></div>
                           <img 
-                              src="/src/assets/images/human_laptop_files_1780890608306.png" 
+                              src={fileImg} 
                               alt="All your storage in one place" 
                               className="w-full object-cover aspect-[4/3] group-hover/img:scale-105 transition-transform duration-700"
                               referrerPolicy="no-referrer"
@@ -898,7 +901,7 @@ const LandingPage: React.FC<LandingPageProps> = ({ onLoginSuccess }) => {
                       <div className="flex-1 max-w-md w-full relative group/img overflow-hidden rounded-2xl border border-white/10 shadow-[0_20px_50px_rgba(0,0,0,0.5)]">
                           <div className="absolute inset-0 bg-gradient-to-t from-slate-950/85 via-transparent to-transparent z-10 pointer-events-none"></div>
                           <img 
-                              src="/src/assets/images/man_phone_todo_1780921183954.png" 
+                              src={todoImg} 
                               alt="Every to-do in a single view" 
                               className="w-full object-cover aspect-[4/3] group-hover/img:scale-105 transition-transform duration-700"
                               referrerPolicy="no-referrer"
@@ -925,7 +928,7 @@ const LandingPage: React.FC<LandingPageProps> = ({ onLoginSuccess }) => {
                       <div className="flex-1 max-w-md w-full relative group/img overflow-hidden rounded-2xl border border-white/10 shadow-[0_20px_50px_rgba(0,0,0,0.5)]">
                           <div className="absolute inset-0 bg-gradient-to-t from-slate-950/85 via-transparent to-transparent z-10 pointer-events-none"></div>
                           <img 
-                              src="/src/assets/images/synced_devices_hq_1780921199459.png" 
+                              src={syncImg} 
                               alt="On every screen, always ready" 
                               className="w-full object-cover aspect-[4/3] group-hover/img:scale-105 transition-transform duration-700"
                               referrerPolicy="no-referrer"
